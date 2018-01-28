@@ -6,4 +6,5 @@ import System.Environment (getArgs)
 main :: IO ()
 main = do
   values <- getArgs
-  print . median $ map read values
+  print $ map vowelIndices values
+  -- print . median $ map read values
