@@ -21,7 +21,13 @@ description:         Please see the README on Github at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- conduit
+- conduit-extra
 - csv
+- filepath
+- http-conduit
+- network-uri
+- resourcet
 
 library:
   source-dirs: src
