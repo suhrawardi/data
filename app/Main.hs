@@ -1,6 +1,9 @@
 module Main where
 
-import Lib
+import HsData
+import System.Environment (getArgs)
 
 main :: IO ()
-main = someFunc
+main = do
+  values <- getArgs
+  print . median $ map read values

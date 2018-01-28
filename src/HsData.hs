@@ -1,11 +1,7 @@
-module Lib
-    ( someFunc
-    ) where
+module HsData (median) where
 
 import Data.List
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
 
 median :: [Double] -> Double
 median [] = 0
