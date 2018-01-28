@@ -1,0 +1,8 @@
+time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type,horizontalError,depthError,magError,magNst,status,locationSource,magSource
+2018-01-26T22:47:57.880Z,-3.5375,145.8428,10,6.3,mww,,18,2.125,1.36,us,us2000cq5t,2018-01-27T06:43:57.042Z,"186km N of Madang, Papua New Guinea",earthquake,7,1.7,0.063,24,reviewed,us,us
+2018-01-26T03:32:08.150Z,42.5654,-111.4823,10,4.3,mb,,85,0.127,0.72,us,us2000cpkg,2018-01-27T16:09:36.496Z,"14km SE of Soda Springs, Idaho",earthquake,2.9,2,0.108,24,reviewed,us,us
+2018-01-25T16:39:43.230Z,40.4372,-126.3397,8.06,5.8,mww,,41,1.528,0.98,us,us2000cpba,2018-01-28T10:35:32.127Z,"176km W of Ferndale, California",earthquake,5.3,2.9,0.039,62,reviewed,us,us
+2018-01-25T10:09:56.810Z,33.741,-117.4911667,11.15,3.97,mw,198,22,0.02263,0.25,ci,ci38092312,2018-01-28T14:18:47.405Z,"12km NE of Trabuco Canyon, CA",earthquake,0.11,0.22,,6,reviewed,ci,ci
+2018-01-24T10:51:20.650Z,41.1217,142.294,39.75,6.2,mww,,63,0.988,0.98,us,us2000cnnl,2018-01-27T04:11:29.433Z,"92km ESE of Mutsu, Japan",earthquake,4.9,4.9,0.073,18,reviewed,us,us
+2018-01-23T09:31:42.940Z,56.0464,-149.0728,25,7.9,mww,,28,2.595,0.9,us,us2000cmy3,2018-01-28T05:15:38.594Z,"280km SE of Kodiak, Alaska",earthquake,5.9,1.8,0.052,35,reviewed,us,us
+2018-01-23T06:34:54.240Z,-7.1958,105.9181,43.91,6,mww,,75,3.274,1.16,us,us2000cmwz,2018-01-26T12:07:18.379Z,"40km S of Binuangeun, Indonesia",earthquake,8.1,6.7,0.071,19,reviewed,us,us

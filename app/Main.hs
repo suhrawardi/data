@@ -1,12 +1,13 @@
 module Main where
 
+import HsCsv
 import HsData
 import System.Environment (getArgs)
 
 main :: IO ()
 main = do
   values <- getArgs
-  print $ map medianAndMean $ map fromInt $ map vowelIndices values
-
-fromInt :: (Num b, Integral a) => [a] -> [b]
-fromInt xs = map fromIntegral xs
+  print $ head values
+  res <- getColumnInCsvFile (head values) (last values)
+  print res
+  -- print $ map medianAndMean $ map (map fromIntegral) $ map vowelIndices values

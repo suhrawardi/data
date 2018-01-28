@@ -2,7 +2,6 @@ module HsData (medianAndMean, vowelIndices) where
 
 import Data.List
 
-medianAndMean :: [Fractional] => (Fractional, Fractional)
 medianAndMean xs = (median xs, avg xs)
 
 avg :: (Real a, Fractional b) => [a] -> b
