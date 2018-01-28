@@ -5,3 +5,5 @@ data.cabal
 *.sw*
 
 /tmp/*.csv
+
+.DS_Store
