@@ -1,7 +1,10 @@
-module HsData (median, vowelIndices) where
+module HsData (medianAndMean, vowelIndices) where
 
 import Data.List
 
+medianAndMean xs = (median xs, avg xs)
+
+avg xs = realToFrac (sum xs) / fromIntegral (length xs)
 
 median :: [Double] -> Double
 median [] = 0
