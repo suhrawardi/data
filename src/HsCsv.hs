@@ -1,4 +1,4 @@
-module HsCsv (getColumnInCsvFile) where
+module HsCsv (applyToColumnInCsvFile) where
 
 import Data.Either
 import Data.List
@@ -18,3 +18,25 @@ getColumnInCsv csv columnName =
     Just x -> Right (fromIntegral x)
   where
   lookupResponse = findIndex (== columnName) (head csv)
+
+applyToColumnInCsvFile :: ([String] -> b) -> FilePath -> String -> IO (Either String b)
+applyToColumnInCsvFile func file column = do
+    input <- readFile file
+    let records = parseCSV file input
+    return $ either
+      handleCSVError
+      (\csv -> applyToColumnInCsv func csv column)
+      records
+  where
+    handleCSVError _ = Left "This does not appear to be a CSV file."
+
+applyToColumnInCsv :: ([String] -> b) -> CSV -> String -> Either String b
+applyToColumnInCsv func csv column = either
+    (\_ -> Left "Error applying func")
+    (Right . func . elements)
+  columnIndex
+  where
+    columnIndex = getColumnInCsv csv column
+    nFieldsInFile = length $ head csv
+    records = tail $ filter (\record -> nFieldsInFile == length record) csv
+    elements ci = map (\record -> genericIndex record ci) records

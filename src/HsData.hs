@@ -1,10 +1,11 @@
-module HsData (medianAndMean, vowelIndices) where
+module HsData (avg, median, medianAndMean, readColumn) where
 
 import Data.List
 
 medianAndMean xs = (median xs, avg xs)
 
 avg :: (Real a, Fractional b) => [a] -> b
+avg [] = 0
 avg xs = realToFrac (sum xs) / fromIntegral (length xs)
 
 median :: [Double] -> Double
@@ -20,8 +21,5 @@ median xs = if oddInLength then
     middleValue = genericIndex sortedList middle
     beforeMiddleValue = genericIndex sortedList (middle - 1)
 
-vowelIndices :: String -> [Integer]
-vowelIndices word = map fst $ filter isVowel $ zip [1..] word
-
-isVowel :: (Integer, Char) -> Bool
-isVowel (_, letter) = elem letter "aeiouAEIOU"
+readColumn :: [String] -> [Double]
+readColumn = map read
