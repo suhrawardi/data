@@ -2,8 +2,10 @@ module HsData (medianAndMean, vowelIndices) where
 
 import Data.List
 
+medianAndMean :: [Fractional] => (Fractional, Fractional)
 medianAndMean xs = (median xs, avg xs)
 
+avg :: (Real a, Fractional b) => [a] -> b
 avg xs = realToFrac (sum xs) / fromIntegral (length xs)
 
 median :: [Double] -> Double
