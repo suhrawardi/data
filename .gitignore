@@ -7,3 +7,5 @@ data.cabal
 /tmp/*.csv
 
 .DS_Store
+
+/*.sql

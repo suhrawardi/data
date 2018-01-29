@@ -1,9 +1,20 @@
-module HsSqlite (convertCsvToSql) where
+module HsSqlite (convertCsvFileToSql) where
 
 import Data.List
 import Database.HDBC
 import Database.HDBC.Sqlite3
 import Text.CSV
+
+convertCsvFileToSql :: String -> String -> String -> [String] -> IO ()
+convertCsvFileToSql inFileName outFileName tableName fields = do
+  input <- readFile inFileName
+  let records = parseCSV inFileName input
+  either
+    handleCsvError
+    convertTool records
+  where
+    convertTool = convertCsvToSql tableName outFileName fields
+    handleCsvError csv = putStrLn "This is not a CSV file"
 
 convertCsvToSql :: String -> FilePath -> [String] -> CSV -> IO ()
 convertCsvToSql tableName outFileName fields records =
