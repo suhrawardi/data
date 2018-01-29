@@ -25,9 +25,12 @@ dependencies:
 - conduit-extra
 - csv
 - filepath
+- HDBC
+- HDBC-sqlite3
 - http-conduit
 - network-uri
 - resourcet
+- sqlite
 
 library:
   source-dirs: src
