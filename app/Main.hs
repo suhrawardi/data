@@ -20,7 +20,7 @@ main02 = do
       path = "tmp/" ++ takeFileName url
       columnName = head values
   downloadData url path
-  convertCsvFileToSql path "earthquakes.sql" "earthquakes" ["time","latitude","longitude","depth","mag","magType","nst","gap","dmin","rms","net","id","updated","place","type","horizontalError","depthError","magError","magNst","status","locationSource","magSource"]
+  convertCsvFileToSql path "earthquakes.sql" "earthquakes"
   res <- applyToColumnInCsvFile (minimum . readColumn) path columnName
   conn <- connectSqlite3 "earthquakes.sql"
   latitudes <- quickQuery conn "SELECT latitude FROM earthquakes" []
