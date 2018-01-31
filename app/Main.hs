@@ -10,20 +10,26 @@ import System.Environment (getArgs)
 import System.FilePath.Posix
 import Text.CSV
 
+import Prelude hiding (catch)
+import System.Directory
+import Control.Exception
+import System.IO.Error hiding (catch)
+
 main :: IO ()
 main = main02
 
 main02 :: IO ()
 main02 = do
-  values <- getArgs
   let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv"
-      path = "tmp/" ++ takeFileName url
-      columnName = head values
-  downloadData url path
-  convertCsvFileToSql path "earthquakes.sql" "earthquakes"
-  res <- applyToColumnInCsvFile (minimum . readColumn) path columnName
-  conn <- connectSqlite3 "earthquakes.sql"
-  latitudes <- quickQuery conn "SELECT latitude FROM earthquakes" []
+      baseName = takeBaseName url
+      csvFile = "tmp/" ++ baseName ++ ".csv"
+      sqlFile = "tmp/" ++ baseName ++ ".sql"
+  removeIfExists csvFile
+  removeIfExists sqlFile
+  downloadData url csvFile
+  convertCsvFileToSql csvFile sqlFile baseName
+  conn <- connectSqlite3 sqlFile
+  latitudes <- quickQuery conn ("SELECT latitude FROM " ++ baseName) []
   let latitudesDbl = map (\record -> fromSql $ head record :: Double) latitudes
   print $ avg latitudesDbl
 
@@ -36,3 +42,9 @@ main01 = do
   downloadData url path
   res <- applyToColumnInCsvFile (avg . readColumn) path columnName
   print res
+
+removeIfExists :: FilePath -> IO ()
+removeIfExists fileName = removeFile fileName `catch` handleExists
+  where handleExists e
+          | isDoesNotExistError e = return ()
+          | otherwise = throwIO e
