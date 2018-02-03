@@ -1,5 +1,6 @@
-module HsPlot (pullStockClosingPrices) where
+module HsPlot (applyPercentChangeToData, pullStockClosingPrices) where
 
+import Data.List
 import Database.HDBC
 import Database.HDBC.Sqlite3
 import HsCsv
@@ -14,3 +15,15 @@ pullStockClosingPrices sqlFile database = do
   return $ zip
     (readDoubleColumn sqlResult 0)
     (readDoubleColumn sqlResult 1)
+
+percentChange :: Double -> Double -> Double
+percentChange value first = 100.0 * (value - first) / first
+
+applyPercentChangeToData :: [(Double, Double)] -> [(Double, Double)]
+applyPercentChangeToData dataset = zip indices scaledData
+  where
+    (_, first) = last dataset
+    indices = [1.0..(genericLength dataset)]
+    scaledData = map
+      (\(_, value) -> percentChange value first)
+      dataset

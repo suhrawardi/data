@@ -31,7 +31,8 @@ main03 = do
   removeIfExists sqlFile
   convertCsvFileToSql csvFile sqlFile baseName
   result <- pullStockClosingPrices sqlFile baseName
-  plot (PNG (baseName ++ ".png")) $ Data2D [Title baseName, Style Lines] [] $ result
+  let resultPc = applyPercentChangeToData result
+  plot (PNG (baseName ++ ".png")) $ Data2D [Title baseName, Style Lines] [] $ resultPc
   return ()
 
 main02 :: IO ()
