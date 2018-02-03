@@ -5,6 +5,7 @@ data.cabal
 *.sw*
 
 /tmp/*
+/csv/*.csv
 
 .DS_Store
 

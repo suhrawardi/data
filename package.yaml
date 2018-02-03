@@ -25,12 +25,14 @@ dependencies:
 - conduit-extra
 - csv
 - directory
+- easyplot
 - filepath
 - HDBC
 - HDBC-sqlite3
 - http-conduit
 - network-uri
 - resourcet
+- split
 - sqlite
 
 library:

@@ -1,4 +1,4 @@
-module HsSqlite (convertCsvFileToSql) where
+module HsSqliteImport (convertCsvFileToSql) where
 
 import Data.List
 import Database.HDBC

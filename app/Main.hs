@@ -1,11 +1,12 @@
 module Main where
 
+import Data.List.Split
 import Database.HDBC
 import Database.HDBC.Sqlite3
 import HsCsv
 import HsData
 import HsDownload
-import HsSqlite
+import HsSqliteImport
 import System.Environment (getArgs)
 import System.FilePath.Posix
 import Text.CSV
@@ -16,7 +17,19 @@ import Control.Exception
 import System.IO.Error hiding (catch)
 
 main :: IO ()
-main = main02
+main = main03
+
+main03 :: IO ()
+main03 = do
+  let url = "https://query1.finance.yahoo.com/v7/finance/download/AAPL?period1=1515012285&period2=1517690685&interval=1d&events=history&crumb=Bqk.lhpARaB"
+      (baseName:_) = splitOn "?" $ takeBaseName url
+      csvFile = "csv/" ++ baseName ++ ".csv"
+      sqlFile = "tmp/" ++ baseName ++ ".sql"
+  print $ "Using CSV file " ++ csvFile
+  print $ "Using db " ++ sqlFile
+  removeIfExists sqlFile
+  convertCsvFileToSql csvFile sqlFile baseName
+  return ()
 
 main02 :: IO ()
 main02 = do
