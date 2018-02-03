@@ -10,3 +10,6 @@ data.cabal
 .DS_Store
 
 /*.sql
+
+*.dat
+*.png

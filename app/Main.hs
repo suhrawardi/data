@@ -3,9 +3,11 @@ module Main where
 import Data.List.Split
 import Database.HDBC
 import Database.HDBC.Sqlite3
+import Graphics.EasyPlot
 import HsCsv
 import HsData
 import HsDownload
+import HsPlot
 import HsSqliteImport
 import System.Environment (getArgs)
 import System.FilePath.Posix
@@ -29,6 +31,8 @@ main03 = do
   print $ "Using db " ++ sqlFile
   removeIfExists sqlFile
   convertCsvFileToSql csvFile sqlFile baseName
+  result <- pullStockClosingPrices sqlFile baseName
+  plot (PNG (baseName ++ ".png")) $ Data2D [Title baseName] [] $ result
   return ()
 
 main02 :: IO ()
