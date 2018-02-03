@@ -10,7 +10,7 @@ import Text.CSV
 pullStockClosingPrices :: String -> String -> IO [(Double, Double)]
 pullStockClosingPrices sqlFile database = do
   conn <- connectSqlite3 sqlFile
-  sqlResult  <- quickQuery conn ("SELECT rowid, adjclose FROM " ++ database) []
+  sqlResult  <- quickQuery conn ("SELECT rowid, price FROM " ++ database) []
   return $ zip
-    (reverse $ readDoubleColumn sqlResult 0)
+    (readDoubleColumn sqlResult 0)
     (readDoubleColumn sqlResult 1)

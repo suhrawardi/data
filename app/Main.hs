@@ -23,8 +23,7 @@ main = main03
 
 main03 :: IO ()
 main03 = do
-  let url = "https://query1.finance.yahoo.com/v7/finance/download/AAPL?period1=1515012285&period2=1517690685&interval=1d&events=history&crumb=Bqk.lhpARaB"
-      (baseName:_) = splitOn "?" $ takeBaseName url
+  let baseName = "bitcoin"
       csvFile = "csv/" ++ baseName ++ ".csv"
       sqlFile = "tmp/" ++ baseName ++ ".sql"
   print $ "Using CSV file " ++ csvFile
@@ -32,7 +31,7 @@ main03 = do
   removeIfExists sqlFile
   convertCsvFileToSql csvFile sqlFile baseName
   result <- pullStockClosingPrices sqlFile baseName
-  plot (PNG (baseName ++ ".png")) $ Data2D [Title baseName] [] $ result
+  plot (PNG (baseName ++ ".png")) $ Data2D [Title baseName, Style Lines] [] $ result
   return ()
 
 main02 :: IO ()
