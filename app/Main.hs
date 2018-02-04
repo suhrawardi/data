@@ -19,7 +19,22 @@ import Control.Exception
 import System.IO.Error hiding (catch)
 
 main :: IO ()
-main = main03
+main = main04
+
+main04 :: IO ()
+main04 = do
+  let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv"
+      baseName = takeBaseName url
+      csvFile = "tmp/" ++ baseName ++ ".csv"
+      sqlFile = "tmp/" ++ baseName ++ ".sql"
+      pngFile = baseName ++ ".png"
+  removeIfExists csvFile
+  removeIfExists sqlFile
+  downloadData url csvFile
+  convertCsvFileToSql csvFile sqlFile baseName
+  coords <- pullLatitudeLongitude sqlFile baseName
+  plot (PNG pngFile) [Data2D [Title baseName, Color Red, Style Dots] [] coords]
+  return ()
 
 main03 :: IO ()
 main03 = do

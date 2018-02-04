@@ -1,4 +1,4 @@
-module HsPlot (applyMovingAverage, applyPercentChange, pullStockClosingPrices) where
+module HsPlot (applyMovingAverage, applyPercentChange, pullStockClosingPrices, pullLatitudeLongitude) where
 
 import Data.List
 import Database.HDBC
@@ -9,10 +9,16 @@ import HsSqliteImport
 import HsSqliteQuery
 import Text.CSV
 
+pullLatitudeLongitude :: String -> String -> IO [(Double, Double)]
+pullLatitudeLongitude sqlFile database = do
+  conn <- connectSqlite3 sqlFile
+  sqlResult <- quickQuery conn ("SELECT latitude, longitude FROM " ++ database) []
+  return $ zip (readDoubleColumn sqlResult 1) (readDoubleColumn sqlResult 0)
+
 pullStockClosingPrices :: String -> String -> IO [(Double, Double)]
 pullStockClosingPrices sqlFile database = do
   conn <- connectSqlite3 sqlFile
-  sqlResult  <- quickQuery conn ("SELECT rowid, price FROM " ++ database) []
+  sqlResult <- quickQuery conn ("SELECT rowid, price FROM " ++ database) []
   return $ zip
     (readDoubleColumn sqlResult 0)
     (readDoubleColumn sqlResult 1)
