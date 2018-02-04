@@ -1,6 +1,14 @@
-module HsData (avg, median, medianAndMean, readColumn) where
+module HsData (avg, median, medianAndMean, movingAverage, percentChange, readColumn) where
 
 import Data.List
+
+movingAverage :: [Double] -> Integer -> [Double]
+movingAverage values window
+  | window >= genericLength values = [avg values]
+  | otherwise = avg (genericTake window values):(movingAverage (tail values) window)
+
+percentChange :: Double -> Double -> Double
+percentChange value first = 100.0 * (value - first) / first
 
 medianAndMean xs = (median xs, avg xs)
 

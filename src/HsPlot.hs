@@ -1,9 +1,10 @@
-module HsPlot (applyPercentChangeToData, pullStockClosingPrices) where
+module HsPlot (applyMovingAverage, applyPercentChange, pullStockClosingPrices) where
 
 import Data.List
 import Database.HDBC
 import Database.HDBC.Sqlite3
 import HsCsv
+import HsData
 import HsSqliteImport
 import HsSqliteQuery
 import Text.CSV
@@ -16,11 +17,12 @@ pullStockClosingPrices sqlFile database = do
     (readDoubleColumn sqlResult 0)
     (readDoubleColumn sqlResult 1)
 
-percentChange :: Double -> Double -> Double
-percentChange value first = 100.0 * (value - first) / first
+applyMovingAverage :: [(Double, Double)] -> Integer -> [(Double, Double)]
+applyMovingAverage dataset window =
+  zip [fromIntegral window..] $ movingAverage (map snd (dataset)) window
 
-applyPercentChangeToData :: [(Double, Double)] -> [(Double, Double)]
-applyPercentChangeToData dataset = zip indices scaledData
+applyPercentChange :: [(Double, Double)] -> [(Double, Double)]
+applyPercentChange dataset = zip indices scaledData
   where
     (_, first) = last dataset
     indices = [1.0..(genericLength dataset)]

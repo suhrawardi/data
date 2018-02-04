@@ -30,9 +30,15 @@ main03 = do
   print $ "Using db " ++ sqlFile
   removeIfExists sqlFile
   convertCsvFileToSql csvFile sqlFile baseName
-  result <- pullStockClosingPrices sqlFile baseName
-  let resultPc = applyPercentChangeToData result
-  plot (PNG (baseName ++ ".png")) $ Data2D [Title baseName, Style Lines] [] $ resultPc
+  resultRaw <- pullStockClosingPrices sqlFile baseName
+  let result = take 365 resultRaw
+      resultPc = applyPercentChange result
+      resultMc50 = applyMovingAverage result 5
+      resultMc200 = applyMovingAverage result 20
+  plot (PNG (baseName ++ ".png")) $ [
+    Data2D [Title baseName, Style Lines, Color Red] [] resultPc,
+    Data2D [Title baseName, Style Lines, Color Black] [] resultMc50,
+    Data2D [Title baseName, Style Lines, Color Yellow] [] resultMc200]
   return ()
 
 main02 :: IO ()
